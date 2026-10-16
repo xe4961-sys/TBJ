@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0e1726">
+  <meta name="description" content="A tabletop initiative tracker. Player roster, customize speed ranges, and roll a new turn order every round.">
+  <title>TBJ — Initiative tracker</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%238ac8ff'/%3E%3Cpath d='m36 10-20 26h14l-2 18 20-27H34z' fill='%230e1726'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="TBJ initiative tracker"><span class="brand-mark">ϟ</span> TBJ<span class="brand-divider"></span><span class="brand-description">INITIATIVE TRACKER</span></a>
+    <span class="local-status"><span class="status-dot"></span><span id="save-status">Saved on this device</span></span>
+  </header>
+  <main>
+    <section class="intro">
+      <div><h1>Initiative tracker</h1><p>Manage players, speed ranges, rounds, and turn order.</p></div>
+    </section>
+    <div class="workspace">
+      <section class="roster-panel panel" aria-labelledby="roster-heading">
+        <div class="panel-heading"><div><span class="section-index">01 / SETUP</span><h2 id="roster-heading">Player roster<span id="player-count" class="count-badge"></span></h2></div><span class="panel-symbol">⌘</span></div>
+        <div class="tabs" role="tablist" aria-label="Roster settings"><button class="tab active" role="tab" id="players-tab" aria-selected="true" aria-controls="players-view" data-tab="players">Players<span class="tab-dot"></span></button><button class="tab" role="tab" id="types-tab" aria-selected="false" aria-controls="types-view" data-tab="types" tabindex="-1">Character types</button></div>
+        <div id="players-view" role="tabpanel" aria-labelledby="players-tab">
+          <div class="roster-toolbar"><p>Player setup</p><label class="survivor-count">Survivors <input id="survivor-count" type="number" min="0" max="24" aria-label="Number of survivors"></label></div>
+          <div class="column-labels"><span>PLAYER / CHARACTER</span><span>SPEED RANGE</span><span></span></div>
+          <div id="players"></div>
+          <div class="add-actions"><button class="button button-outline" id="add-survivor"><span>＋</span> Add survivor</button><button class="button button-outline adversary-add" id="add-adversary"><span>＋</span> Add adversary</button></div>
+          <div class="roster-note"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 3v9h12m-4-4 4 4-4 4"/></svg><p>Change a player's range for this session. Edit <button class="text-button" data-open-types>character types</button> to change the defaults.<span id="next-round-note"></span></p></div>
+        </div>
+        <div id="types-view" role="tabpanel" aria-labelledby="types-tab" hidden>
+          <p class="types-intro">Edit default speed ranges. Players using a type’s defaults update automatically; individual range overrides are preserved.</p>
+          <div id="types"></div>
+          <form id="new-type-form" class="new-type-form"><h3>Create a character type</h3><div class="new-type-fields"><label>Name<input id="new-type-name" name="name" required maxlength="32" placeholder="e.g. Medic"></label><label>Team<select name="role"><option value="survivor">Survivor</option><option value="adversary">Adversary</option></select></label><label>Min<input name="min" type="number" min="1" max="999" value="3" required></label><label>Max<input name="max" type="number" min="1" max="999" value="7" required></label></div><button class="button button-outline" type="submit">＋ Add character type</button></form>
+        </div>
+      </section>
+      <aside class="initiative-panel panel" aria-labelledby="initiative-heading">
+        <div class="panel-heading"><div><span class="section-index">02 / PLAY</span><h2 id="initiative-heading">Turn order</h2></div><span class="live-badge" id="round-status">READY TO ROLL</span></div>
+        <div class="round-dashboard"><div><span class="mini-label">CURRENT ROUND</span><div class="round-number" id="round-number">00</div></div><div class="progress-summary"><span id="turn-progress">Waiting for the first roll</span><div class="progress-track"><div id="progress-bar"></div></div></div></div>
+        <div id="turn-list" aria-live="polite" aria-atomic="true"></div>
+        <div class="round-actions"><button class="button button-primary" id="play"><span class="dice-icon">⚄</span><span id="play-label">Play first round</span><svg class="button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></button><button class="button button-next" id="next" disabled><span id="next-label">Next turn</span><span>→</span></button><div class="play-hint">Highest speed goes first. Ties are randomized.</div></div>
+        <button class="reset-button" id="reset">↺ Reset rounds</button>
+      </aside>
+    </div>
+  </main>
+  <footer><span><strong>TBJ</strong> Initiative tracker</span><span>Session data is saved in this browser.</span></footer>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>

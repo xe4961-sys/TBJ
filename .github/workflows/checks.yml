@@ -1,0 +1,24 @@
+name: Check tracker
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test game rules
+        run: npm test
+      - name: Verify single-file download is up to date
+        run: |
+          npm run export
+          git diff --exit-code -- dist/TBJ-tracker.html
