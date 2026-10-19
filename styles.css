@@ -22,3 +22,5 @@
 @media(prefers-reduced-motion:reduce){.dice-cube{animation:none;transform:rotateX(-10deg) rotateY(-20deg)}}
 
 .next-range.modified-range{color:#c1e2ff;border:1px solid #5284b3;background:#203d5b;padding:6px 8px;border-radius:5px}.next-range.modified-range strong{font-size:14px;color:#b9e0ff}
+
+.effect-feedback{font-size:11px;line-height:1.6;padding:10px 12px;margin:12px 0 0;color:#c1e2ff;background:#203d5b;border-left:3px solid #8ac8ff;border-radius:3px;overflow-wrap:anywhere}.effect-feedback[data-kind="error"]{color:#ffdbcb;background:#3d2b30;border-color:#f2b19b}

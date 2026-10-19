@@ -35,7 +35,7 @@ function previewMarkup(player) {
   return `Next roll <strong>${range.min}–${range.max}</strong>${range.modifier ? `<span class="net-modifier">(${signed(range.modifier)} net)</span>` : ''}`;
 }
 function effectEditor(player) {
-  return `<form class="effect-editor" id="effects-${escape(player.id)}" ${openEffects === player.id ? '' : 'hidden'}>
+  return `<div class="effect-editor" role="group" aria-label="Add speed effect" id="effects-${escape(player.id)}" ${openEffects === player.id ? '' : 'hidden'}>
     <h3>Add speed effect</h3><div class="effect-fields">
       <label>Effect<select name="kind"><option value="haste">Haste (+)</option><option value="bind">Bind (−)</option></select></label>
       <label>Amount<input name="amount" type="number" min="1" max="999" value="2" required></label>
@@ -43,8 +43,8 @@ function effectEditor(player) {
       <label>Rounds<input name="rounds" type="number" min="1" max="99" value="2" required></label>
     </div><label class="effect-label">Condition / label (optional)<input name="label" maxlength="60" placeholder="e.g. Hunter has not attacked"></label>
     <p>Applies on the next roll. Until removed: remove the effect when its condition ends; the current round stays unchanged.</p>
-    <button type="submit" class="button button-outline">Add effect</button>
-  </form>`;
+    <button type="button" data-add-effect class="button button-outline">Add effect</button>
+  </div>`;
 }
 function renderPlayers() {
   $('#player-count').textContent = String(state.players.length).padStart(2, '0');
@@ -54,7 +54,7 @@ function renderPlayers() {
     return `<div class="player-card" data-player="${escape(player.id)}"><div class="player-row ${type.role}"><span class="avatar ${type.role}" aria-hidden="true">${type.role === 'adversary' ? '♜' : ['◇', '✦', '⌁'][index % 3]}</span><div class="player-identity"><label class="sr-only" for="name-${escape(player.id)}">Player ${index + 1} username</label><input class="username" id="name-${escape(player.id)}" data-field="username" value="${escape(player.username)}" maxlength="40" placeholder="Player ${String(index + 1).padStart(2, '0')}"><div class="character-line"><span class="role-dot ${type.role}"></span><label class="sr-only" for="type-${escape(player.id)}">Player ${index + 1} character type</label><select id="type-${escape(player.id)}" data-field="typeId">${state.types.filter(item => item.role === type.role).map(item => `<option value="${escape(item.id)}" ${item.id === type.id ? 'selected' : ''}>${escape(item.name)}</option>`).join('')}</select><span class="role-label">${type.role}</span></div></div>${rangeInputs(player, `range-${escape(player.id)}`)}<button class="icon-button remove-player" aria-label="Remove player ${index + 1}" title="Remove player">×</button></div>
       <div class="player-effects"><div class="effects-toolbar"><span class="next-range ${player.effects.length ? 'modified-range' : ''}">${previewMarkup(player)}</span><button type="button" class="effects-toggle" aria-expanded="${openEffects === player.id}" aria-controls="effects-${escape(player.id)}" aria-label="Speed effects for player ${index + 1}">${openEffects === player.id ? 'Close effects' : '＋ Effects'}</button></div>
       ${player.effects.length ? `<div class="effect-chips">${player.effects.map(effect => `<span class="effect-chip ${effect.kind}"><span>${escape(effectName(effect))}${effect.label ? ` · ${escape(effect.label)}` : ''}<small> · ${effect.roundsRemaining === null ? 'until removed' : `${effect.roundsRemaining} round${effect.roundsRemaining === 1 ? '' : 's'} left`}</small></span><button type="button" data-remove-effect="${escape(effect.id)}" aria-label="Remove ${escape(effectName(effect))}${effect.label ? ` ${escape(effect.label)}` : ''} from player ${index + 1}">×</button></span>`).join('')}</div>` : ''}
-      ${effectEditor(player)}</div></div>`;
+      <p class="effect-feedback" role="status" hidden></p>${effectEditor(player)}</div></div>`;
   }).join('') || '<div class="empty-roster">No players added. Add a survivor or adversary.</div>';
   $('#next-round-note').textContent = state.round ? ' Roster changes apply on the next roll.' : '';
   $('#add-survivor').disabled = Number($('#survivor-count').value) >= 24;
@@ -157,7 +157,9 @@ $('#players').addEventListener('change', event => {
 $('#players').addEventListener('click', event => {
   const card = event.target.closest('[data-player]');
   if (!card || isRolling) return;
-  if (event.target.closest('.effects-toggle')) {
+  if (event.target.closest('[data-add-effect]')) {
+    applyPlayerEffect(card.querySelector('.effect-editor'));
+  } else if (event.target.closest('.effects-toggle')) {
     openEffects = openEffects === card.dataset.player ? null : card.dataset.player;
     for (const item of document.querySelectorAll('.player-card')) {
       const editor = item.querySelector('.effect-editor'), toggle = item.querySelector('.effects-toggle');
@@ -174,22 +176,51 @@ $('#players').addEventListener('click', event => {
 });
 $('#players').addEventListener('change', event => {
   if (event.target.name !== 'duration') return;
-  const rounds = event.target.form.elements.rounds;
+  const rounds = event.target.closest('.effect-editor').querySelector('[name="rounds"]');
   rounds.disabled = event.target.value === 'conditional';
 });
-$('#players').addEventListener('submit', event => {
-  if (!event.target.matches('.effect-editor')) return;
-  event.preventDefault();
+function showInlineFeedback(element, message, error = false) {
+  element.textContent = message;
+  element.dataset.kind = error ? 'error' : 'success';
+  element.hidden = false;
+}
+function applyPlayerEffect(editor) {
   if (isRolling) return;
+  const card = editor.closest('[data-player]');
+  const feedback = card.querySelector('.effect-feedback');
   try {
-    const form = event.target, data = new FormData(form), playerId = form.closest('[data-player]').dataset.player;
-    const effect = { id: createId(), kind: data.get('kind'), amount: Number(data.get('amount')),
-      roundsRemaining: data.get('duration') === 'conditional' ? null : Number(data.get('rounds')), label: data.get('label').trim() };
+    // This is a local state change, not a form submission. HTML preview frames
+    // often disallow forms even when they allow scripts and ordinary buttons.
+    for (const input of editor.querySelectorAll('input, select')) {
+      if (!input.checkValidity()) {
+        showInlineFeedback(feedback, input.validationMessage, true);
+        input.reportValidity();
+        return;
+      }
+    }
+    const read = name => editor.querySelector(`[name="${name}"]`).value;
+    const effect = { id: createId(), kind: read('kind'), amount: Number(read('amount')),
+      roundsRemaining: read('duration') === 'conditional' ? null : Number(read('rounds')), label: read('label').trim() };
+    const playerId = card.dataset.player;
     state = addSpeedEffect(state, playerId, effect);
     const range = effectiveRange(state.players.find(player => player.id === playerId));
+    openEffects = null;
     renderPlayers(); persist();
-    toast(`${effectName(effect)} added. Next roll: ${range.min}–${range.max}. ${effect.roundsRemaining === null ? 'Active until removed.' : `Applies for the next ${effect.roundsRemaining} round roll${effect.roundsRemaining === 1 ? '' : 's'}.`}`);
-  } catch (error) { toast(error.message); }
+    const updatedCard = Array.from(document.querySelectorAll('.player-card')).find(item => item.dataset.player === playerId);
+    const message = `${effectName(effect)} added. Next roll: ${range.min}–${range.max}. ${effect.roundsRemaining === null ? 'Active until removed.' : `Applies for the next ${effect.roundsRemaining} round roll${effect.roundsRemaining === 1 ? '' : 's'}.`}`;
+    showInlineFeedback(updatedCard.querySelector('.effect-feedback'), message);
+    updatedCard.querySelector('.effects-toggle').focus({ preventScroll: true });
+    toast(message);
+  } catch (error) {
+    showInlineFeedback(feedback, error.message || 'Effect could not be added. Please check the amount and duration.', true);
+  }
+}
+$('#players').addEventListener('keydown', event => {
+  const editor = event.target.closest('.effect-editor');
+  if (editor && event.key === 'Enter' && event.target.matches('input')) {
+    event.preventDefault();
+    applyPlayerEffect(editor);
+  }
 });
 $('#types').addEventListener('change', event => {
   const row = event.target.closest('[data-type]');
@@ -207,14 +238,25 @@ $('#types').addEventListener('click', event => {
   state.types = state.types.filter(type => type.id !== event.target.closest('[data-type]').dataset.type);
   render();
 });
-$('#new-type-form').addEventListener('submit', event => {
-  event.preventDefault();
-  const form = event.currentTarget, data = new FormData(form);
-  const min = Number(data.get('min')), max = Number(data.get('max')), name = data.get('name').trim();
-  if (!name || !validRange(min, max)) { toast('Enter a name and a valid speed range, with minimum no higher than maximum.'); return; }
-  if (state.types.length >= 100) { toast('You can have up to 100 character types.'); return; }
-  state.types.push({ id: createId(), name, role: data.get('role'), min, max });
-  form.reset(); render(); toast(`${name} added to character types.`);
+function addCharacterType() {
+  const form = $('#new-type-form'), feedback = $('#type-feedback');
+  if (!form.checkValidity()) {
+    const invalid = form.querySelector(':invalid');
+    showInlineFeedback(feedback, invalid?.validationMessage || 'Check the character name and speed range.', true);
+    form.reportValidity();
+    return;
+  }
+  const read = name => form.elements.namedItem(name).value;
+  const min = Number(read('min')), max = Number(read('max')), name = read('name').trim();
+  if (!name || !validRange(min, max)) { showInlineFeedback(feedback, 'Enter a name and a valid speed range, with minimum no higher than maximum.', true); return; }
+  if (state.types.length >= 100) { showInlineFeedback(feedback, 'You can have up to 100 character types.', true); return; }
+  state.types.push({ id: createId(), name, role: read('role'), min, max });
+  form.reset(); render(); showInlineFeedback(feedback, `${name} added to character types.`);
+}
+$('#add-character-type').addEventListener('click', addCharacterType);
+$('#new-type-form').addEventListener('submit', event => { event.preventDefault(); addCharacterType(); });
+$('#new-type-form').addEventListener('keydown', event => {
+  if (event.key === 'Enter' && event.target.matches('input')) { event.preventDefault(); addCharacterType(); }
 });
 function validateRoster() {
   for (const row of document.querySelectorAll('[data-player]')) {

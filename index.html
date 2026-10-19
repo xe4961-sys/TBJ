@@ -33,7 +33,7 @@
         <div id="types-view" role="tabpanel" aria-labelledby="types-tab" hidden>
           <p class="types-intro">Edit default speed ranges. Players using a type’s defaults update automatically; individual range overrides are preserved.</p>
           <div id="types"></div>
-          <form id="new-type-form" class="new-type-form"><h3>Create a character type</h3><div class="new-type-fields"><label>Name<input id="new-type-name" name="name" required maxlength="32" placeholder="e.g. Medic"></label><label>Team<select name="role"><option value="survivor">Survivor</option><option value="adversary">Adversary</option></select></label><label>Min<input name="min" type="number" min="1" max="999" value="3" required></label><label>Max<input name="max" type="number" min="1" max="999" value="7" required></label></div><button class="button button-outline" type="submit">＋ Add character type</button></form>
+          <form id="new-type-form" class="new-type-form"><h3>Create a character type</h3><div class="new-type-fields"><label>Name<input id="new-type-name" name="name" required maxlength="32" placeholder="e.g. Medic"></label><label>Team<select name="role"><option value="survivor">Survivor</option><option value="adversary">Adversary</option></select></label><label>Min<input name="min" type="number" min="1" max="999" value="3" required></label><label>Max<input name="max" type="number" min="1" max="999" value="7" required></label></div><button class="button button-outline" type="button" id="add-character-type">＋ Add character type</button><p class="effect-feedback" id="type-feedback" role="status" hidden></p></form>
         </div>
       </section>
       <aside class="initiative-panel panel" aria-labelledby="initiative-heading">

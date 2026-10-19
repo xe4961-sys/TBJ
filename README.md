@@ -78,3 +78,10 @@ Each player has base speed inputs, a **Next roll** preview, and an **Effects** b
 - Refreshing during the dice animation restores the already-calculated round, without rerolling or consuming an extra duration. Manually starting a new round early still counts as another round roll.
 
 The dice-roll sound is the user-supplied “Library of Ruina SFX - Click Dice Roll Finger Snap - Sylveon (320k).mp3”, kept at `assets/dice-roll.mp3`. The standalone HTML embeds the audio and needs no external asset files. Turn-change cues are generated locally with Web Audio. No audio plays on page load.
+
+The Add effect and Add character type buttons perform local updates, so they also work in scripted HTML previews that block form submissions. Effect confirmations and validation errors appear beside the player’s controls.
+
+
+## Optional browser regression check
+
+With Python Playwright and Chromium installed, run `npm run export` then `python tests/browser-effects.py` (or pass `--chromium /path/to/chromium`). This checks the embedded HTML with forms explicitly blocked, matching constrained file previews, as well as with forms allowed. It verifies Spotter’s +11 Haste for ten rounds, actual speed rolls, inline validation, keyboard activation, and character creation. The application itself has no runtime dependencies.
