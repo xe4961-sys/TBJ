@@ -1,32 +1,51 @@
-FUSE TIMER - WINDOWS x64
+FUSE TIMER 1.2 - WINDOWS x64
 
-1. Extract this ZIP and open FuseTimer.exe. No .NET installation is needed.
-2. The default grenade key is G and the fuse is 3.00 seconds.
-3. To change the key: click Change key, release the mouse/keys, then press
-   your grenade key. You can also use Mouse middle, Mouse 4, or Mouse 5.
-   Escape cancels key capture. Key combinations are not supported.
-4. Leave Hotkey enabled checked and minimize the app with the title-bar
-   minimize button. Press the same grenade key in the game to start.
-5. Beeps accelerate as time runs out. At zero you hear an explosion.
-   The window shows a burst/emoji when it is visible.
-6. Press the key again to restart. Holding it starts only one countdown.
-7. Sound on controls mute. Volume is adjustable from 0 to 100.
-8. Hide settings makes the window smaller. Always on top keeps it above
-   ordinary windows; exclusive-fullscreen games may cover the window.
-9. Restore the app from the taskbar or double-click its clock icon in the
-   system tray. The tray menu can also enable/disable the hotkey or sound.
-10. Closing the app exits it. It does not launch automatically with Windows.
+UPDATING: Exit the OLD copy from its tray icon first. Then extract this ZIP
+and run the NEW FuseTimer.exe. No .NET installation is required.
 
-The app LISTENS for the key; it does not block, register, replay, or inject
-that key into the game. It runs while minimized, including sound.
-The binding is global: the key also starts it outside the game.
+The app STARTS HIDDEN. There is no settings/taskbar window until you ask.
+- G (default): start or restart the grenade countdown.
+- F8 (default): open/hide settings.
+- Clock icon in the system tray: open settings, mute, pause, or exit.
 
-This is a manual timing aid, not a game integration. It starts when the key
-press is observed, and the game may start its fuse at a different moment.
-Adjust the fuse if necessary. Default is exactly 3 seconds in the timer.
+SEQUENCE AFTER THE GRENADE KEY
+0.00-3.00 seconds: floating countdown with accelerating electronic beeps.
+3.00-3.20 seconds: ARMED, with urgent high-pitched beeps.
+3.20-3.70 seconds: RELEASE!, with urgent high-pitched beeps.
+After 3.70 seconds: warnings stop and the overlay hides by default.
+There is no explosion cue or spoken voice.
 
-This test build was cross-compiled on Linux. The core countdown and key-edge
-logic were tested there; native Windows key capture, UI, and actual sound
-output still need a test on your Windows PC. The executable is unsigned.
+SETTINGS (press F8)
+- Change the grenade key or the separate controls key. Click Change key,
+  release the mouse/keys, then press the new key. Escape cancels capture.
+  The two keys must differ. Supports one key or Mouse middle/4/5, no chords.
+- Sound on/muted and volume: affect ALL countdown and warning beeps.
+- Only show while primed: ON by default. Hides the idle/completed overlay.
+- Gentle warning flashes: optional, OFF by default. Only the ARMED/RELEASE
+  text pulses; it never flashes the whole screen or goes fully invisible.
+- Position overlay: shows a movable preview. Drag the digits, then choose
+  Done positioning. During play the overlay is click-through.
+- Hide controls or F8 returns to hidden/background mode. Closing the
+  settings window also hides it. To stop the app, choose Exit app or tray Exit.
 
-Settings are kept in %LOCALAPPDATA%\FuseTimer\settings.json.
+The overlay has a transparent background, no title bar or border, no taskbar
+button, and does not activate or take focus from the game. Use borderless
+fullscreen or windowed mode; exclusive fullscreen may cover ordinary overlays.
+
+Holding the grenade key starts one sequence. Release and press again to
+restart from 3.00. The app observes the key without blocking/replaying it.
+Hotkey enabled can be turned off; manual Start still works for testing.
+
+Settings, binding, mute, and overlay position are saved under:
+%LOCALAPPDATA%\FuseTimer\settings.json
+If F8 was your old grenade key, the controls key defaults to F9 instead;
+the tray icon always provides access.
+
+This is a manual timing aid, not a game integration or detonation detector.
+The deadline is based on the observed key press. Change Seconds until ARMED
+if calibration is needed; ARMED remains 0.20s and RELEASE remains 0.50s.
+
+TEST BUILD: Windows x64, self-contained, unsigned. Timing, visibility rules,
+key-edge logic, and PCM beep data passed 18 tests on Linux. The executable
+compiled for Windows; native transparency, key input, and speaker output
+still need testing on your Windows PC.

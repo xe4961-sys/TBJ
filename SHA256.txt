@@ -1,2 +1,2 @@
-e363ada478e742d8fb4b5bfebb3c5a24a8affc05c0c6257a051fc1acb0b8d597  FuseTimer-Windows-x64.zip
-06f5d4a0bcfd0fa6e381df48392f7cc942c66cbaa800a2718c23ecd3fdd4d022  FuseTimer-source.zip
+33ab7784c56db94e0438b705244eb3648d259ece18be0321811fa3721f414d4b  FuseTimer-Windows-x64.zip
+ce20e196457d173994e805dd30088fba0ad42cc3fd7df95dc532bfbf6139e3c4  FuseTimer-source.zip

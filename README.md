@@ -1,23 +1,40 @@
-# Fuse Timer — Windows download
+# Fuse Timer 1.2 — Windows download
 
-This branch contains a separate Windows grenade countdown app. The TBJ initiative tracker remains on `main`; do not merge this download branch into it.
+A separate grenade-release countdown app. TBJ's tracker stays on `main`; **do not merge this download branch into main**.
 
-## Download and run
+**[Download the updated Windows ZIP](https://github.com/xe4961-sys/TBJ/raw/refs/heads/fuse-timer-download/FuseTimer-Windows-x64.zip)**
 
-**[Download FuseTimer-Windows-x64.zip](https://github.com/xe4961-sys/TBJ/raw/refs/heads/fuse-timer-download/FuseTimer-Windows-x64.zip)**
+## Start here
 
-1. Save the ZIP on a Windows 10/11 x64 computer.
-2. In File Explorer, right-click the ZIP → **Extract All**.
-3. Open the extracted folder and run **FuseTimer.exe**. No separate .NET installation is needed.
-4. The default grenade key is **G**, and the countdown is **3.00 seconds**. Use **Change key** to choose your own key or Mouse middle/4/5.
-5. Leave **Hotkey enabled** checked. Minimize the app and use the same key in the game. The key still reaches the game. Beeps accelerate, then an explosion sounds at zero. The burst/💥 is visible when the app window is showing.
+1. **Exit the old version** from its clock icon in the system tray.
+2. Download the ZIP, right-click it in Windows File Explorer → **Extract All**.
+3. Run the extracted **FuseTimer.exe**. It needs no separate .NET installation.
+4. **It starts hidden. Press F8 to open settings.** The tray icon is another way to open them.
+5. **G** (default) starts the sequence. Both the grenade key and controls key are configurable.
 
-Sound, volume, always-on-top, and compact-window controls are included. Pressing the key again restarts the timer; holding it triggers once. Restore the window from the taskbar or tray icon.
+## New behavior
 
-Read [QUICKSTART.txt](QUICKSTART.txt) for details. [Source code ZIP](FuseTimer-source.zip) is also provided.
+| After the grenade key | Display |
+| --- | --- |
+| 0–3.00s | Transparent floating countdown; sharp accelerating electronic beeps |
+| 3.00–3.20s | **ARMED**, urgent beeps |
+| 3.20–3.70s | **RELEASE!**, urgent beeps |
+| After 3.70s | Sound stops; overlay hides by default |
+
+No premature explosion indication or spoken voice. The overlay has no window rectangle, title bar, white border, or taskbar button. It is click-through and does not take focus from the game.
+
+In settings:
+
+- **Only show while primed:** on by default; hides the idle/completed overlay.
+- **Gentle warning flashes:** optional, off by default; pulses only ARMED/RELEASE text.
+- **Sound on/muted** and **Volume:** control all beeps independently of flashing.
+- **Position overlay:** drag the displayed digits, then choose Done positioning.
+- **Hide controls** or **F8:** hides the settings window. Closing it hides it too; use **Exit app** or tray **Exit** to quit.
+
+Use borderless fullscreen/windowed mode for overlay visibility. Exclusive fullscreen may cover ordinary desktop overlays. The app is a manual timing aid; it does not detect the game's grenade state. Pressing the grenade key again restarts the sequence; holding it triggers once.
+
+Read [QUICKSTART.txt](QUICKSTART.txt) for complete instructions. [Source ZIP](FuseTimer-source.zip) and [archive checksums](SHA256.txt) are included.
 
 ## Test-build status
 
-The timing/key-edge logic passed nine tests. This self-contained executable was cross-compiled on Linux. Native Windows UI, real game-key input, and audio output still need a test on your Windows PC. It is an unsigned test build and a manual timing aid, not a game integration.
-
-The download archive's SHA-256 is recorded in [SHA256.txt](SHA256.txt). The archive also contains a checksum for the executable.
+18 tests passed for timing, visibility rules, key edges, flashing, and PCM beep data. The self-contained, unsigned Windows x64 executable compiled on Linux. Native Windows transparency/click-through, game key input, and speaker output still need a test on your PC.
