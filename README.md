@@ -1,4 +1,4 @@
-# Fuse Timer 1.2 — Windows download
+# Fuse Timer 1.2.1 — Windows download
 
 A separate grenade-release countdown app. TBJ's tracker stays on `main`; **do not merge this download branch into main**.
 
@@ -12,7 +12,11 @@ A separate grenade-release countdown app. TBJ's tracker stays on `main`; **do no
 4. **It starts hidden. Press F8 to open settings.** The tray icon is another way to open them.
 5. **G** (default) starts the sequence. Both the grenade key and controls key are configurable.
 
-## New behavior
+## Audio update (1.2.1)
+
+Replaces the previous sound player with direct Windows PCM output. **Test sound** plays a longer beep and reconnects to the default audio device; any playback error appears below it. Failed attempts no longer silently disable the audio session. **Windows mixer** opens app volume/output settings if a successful test is still inaudible. Native speaker output still needs a Windows check.
+
+## Behavior
 
 | After the grenade key | Display |
 | --- | --- |
@@ -37,4 +41,4 @@ Read [QUICKSTART.txt](QUICKSTART.txt) for complete instructions. [Source ZIP](Fu
 
 ## Test-build status
 
-18 tests passed for timing, visibility rules, key edges, flashing, and PCM beep data. The self-contained, unsigned Windows x64 executable compiled on Linux. Native Windows transparency/click-through, game key input, and speaker output still need a test on your PC.
+24 tests passed for timing, visibility rules, key edges, flashing, PCM beep data, and audio-control failure recovery using a fake output. The self-contained, unsigned Windows x64 executable compiled on Linux. Native Windows transparency/click-through, game key input, and speaker output still need a test on your PC.

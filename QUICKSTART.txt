@@ -1,4 +1,4 @@
-FUSE TIMER 1.2 - WINDOWS x64
+FUSE TIMER 1.2.1 - WINDOWS x64
 
 UPDATING: Exit the OLD copy from its tray icon first. Then extract this ZIP
 and run the NEW FuseTimer.exe. No .NET installation is required.
@@ -20,6 +20,11 @@ SETTINGS (press F8)
   release the mouse/keys, then press the new key. Escape cancels capture.
   The two keys must differ. Supports one key or Mouse middle/4/5, no chords.
 - Sound on/muted and volume: affect ALL countdown and warning beeps.
+- Test sound: cancels the countdown and plays a longer beep. It uses the
+  selected mute/volume and reconnects to the default Windows audio device.
+  Any Windows audio error appears below the button.
+- Windows mixer: opens Windows volume/output settings. If the sound test is
+  silent, check FuseTimer is unmuted there and uses your speakers/headphones.
 - Only show while primed: ON by default. Hides the idle/completed overlay.
 - Gentle warning flashes: optional, OFF by default. Only the ARMED/RELEASE
   text pulses; it never flashes the whole screen or goes fully invisible.
@@ -46,6 +51,6 @@ The deadline is based on the observed key press. Change Seconds until ARMED
 if calibration is needed; ARMED remains 0.20s and RELEASE remains 0.50s.
 
 TEST BUILD: Windows x64, self-contained, unsigned. Timing, visibility rules,
-key-edge logic, and PCM beep data passed 18 tests on Linux. The executable
+key-edge logic, and PCM beep data passed 24 tests on Linux. The executable
 compiled for Windows; native transparency, key input, and speaker output
 still need testing on your Windows PC.
