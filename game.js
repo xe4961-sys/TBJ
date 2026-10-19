@@ -27,6 +27,18 @@ export const DEFAULT_TYPES = [
   { id: 'hunter', name: 'Hunter', role: 'adversary', min: 3, max: 6 },
   { id: 'custodian', name: 'Custodian', role: 'adversary', min: 3, max: 6 },
 ];
+// These IDs identify local UI records, not authentication or security tokens.
+// randomUUID is absent in older browsers and some downloaded-file contexts.
+let localIdCounter = 0;
+export function createId(provider = globalThis.crypto) {
+  if (typeof provider?.randomUUID === 'function') return provider.randomUUID();
+  if (typeof provider?.getRandomValues === 'function') {
+    const bytes = provider.getRandomValues(new Uint8Array(16));
+    return `id-${Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('')}`;
+  }
+  localIdCounter += 1;
+  return `local-${Date.now().toString(36)}-${localIdCounter.toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
 export function initialState() {
   return {
     schemaVersion: 3,

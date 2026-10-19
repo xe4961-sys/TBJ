@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { initialState, validRange, rollRound, startRound, nextTurn, updateType, isSavedState, DEFAULT_TYPES, migrateSavedState, effectiveRange, addSpeedEffect, removeSpeedEffect, validEffect } from '../game.js';
+import { initialState, validRange, rollRound, startRound, nextTurn, updateType, isSavedState, DEFAULT_TYPES, migrateSavedState, effectiveRange, addSpeedEffect, removeSpeedEffect, validEffect, createId } from '../game.js';
 
 test('rolls use inclusive player ranges and sort fastest first', () => {
   const state = initialState();
@@ -243,4 +243,27 @@ test('version 2 saves gain Assistant and patched defaults without resetting cust
   assert.equal(migrated.queue[0].min, 2);
   assert.equal(migrated.round, 3);
   assert.deepEqual(migrateSavedState(migrated), migrated);
+});
+
+test('record IDs work without randomUUID in downloaded-file browser contexts', () => {
+  assert.equal(createId({ randomUUID: () => 'native-id' }), 'native-id');
+  const fallback = createId({ getRandomValues: bytes => { bytes.fill(13); return bytes; } });
+  assert.equal(fallback, 'id-' + '0d'.repeat(16));
+  const ids = Array.from({ length: 100 }, () => createId(null));
+  assert.equal(new Set(ids).size, 100);
+  assert.ok(ids.every(id => typeof id === 'string' && id.length > 0));
+});
+test('Spotter Haste +11 applies 16–19 to exactly the next ten rolls', () => {
+  let state = addSpeedEffect(initialState(), 'p4', effect('spotter', 'haste', 11, 10, 'Test reason'));
+  assert.deepEqual(effectiveRange(state.players[3]), { min: 16, max: 19, modifier: 11 });
+  for (let round = 1; round <= 10; round++) {
+    state = startRound(state, () => 0);
+    const spotter = state.queue.find(player => player.id === 'p4');
+    assert.equal(spotter.min, 16);
+    assert.equal(spotter.max, 19);
+    assert.equal(spotter.roll, 16);
+  }
+  assert.equal(state.players[3].effects.length, 0);
+  state = startRound(state, () => 0);
+  assert.equal(state.queue.find(player => player.id === 'p4').min, 5);
 });

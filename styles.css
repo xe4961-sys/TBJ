@@ -20,3 +20,5 @@
 @media(max-width:650px){.header-controls .local-status{display:none}.player-effects{padding-left:19px;padding-right:19px}.header-controls{gap:8px}.effect-editor{padding:12px}.sound-toggle{font-size:10px;padding:7px 9px}}
 @media(max-width:390px){.player-effects{padding-left:12px;padding-right:12px}.next-range{font-size:9px}.effects-toolbar{gap:8px}}
 @media(prefers-reduced-motion:reduce){.dice-cube{animation:none;transform:rotateX(-10deg) rotateY(-20deg)}}
+
+.next-range.modified-range{color:#c1e2ff;border:1px solid #5284b3;background:#203d5b;padding:6px 8px;border-radius:5px}.next-range.modified-range strong{font-size:14px;color:#b9e0ff}

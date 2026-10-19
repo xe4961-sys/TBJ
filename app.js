@@ -1,4 +1,4 @@
-import { initialState, validRange, startRound, nextTurn, updateType, isSavedState, migrateSavedState, effectiveRange, addSpeedEffect, removeSpeedEffect } from './game.js';
+import { initialState, validRange, startRound, nextTurn, updateType, isSavedState, migrateSavedState, effectiveRange, addSpeedEffect, removeSpeedEffect, createId } from './game.js';
 
 const storageKey = 'tbj-tracker-v1';
 let state = initialState();
@@ -52,7 +52,7 @@ function renderPlayers() {
   $('#players').innerHTML = state.players.map((player, index) => {
     const type = typeOf(player);
     return `<div class="player-card" data-player="${escape(player.id)}"><div class="player-row ${type.role}"><span class="avatar ${type.role}" aria-hidden="true">${type.role === 'adversary' ? '♜' : ['◇', '✦', '⌁'][index % 3]}</span><div class="player-identity"><label class="sr-only" for="name-${escape(player.id)}">Player ${index + 1} username</label><input class="username" id="name-${escape(player.id)}" data-field="username" value="${escape(player.username)}" maxlength="40" placeholder="Player ${String(index + 1).padStart(2, '0')}"><div class="character-line"><span class="role-dot ${type.role}"></span><label class="sr-only" for="type-${escape(player.id)}">Player ${index + 1} character type</label><select id="type-${escape(player.id)}" data-field="typeId">${state.types.filter(item => item.role === type.role).map(item => `<option value="${escape(item.id)}" ${item.id === type.id ? 'selected' : ''}>${escape(item.name)}</option>`).join('')}</select><span class="role-label">${type.role}</span></div></div>${rangeInputs(player, `range-${escape(player.id)}`)}<button class="icon-button remove-player" aria-label="Remove player ${index + 1}" title="Remove player">×</button></div>
-      <div class="player-effects"><div class="effects-toolbar"><span class="next-range">${previewMarkup(player)}</span><button type="button" class="effects-toggle" aria-expanded="${openEffects === player.id}" aria-controls="effects-${escape(player.id)}" aria-label="Speed effects for player ${index + 1}">${openEffects === player.id ? 'Close effects' : '＋ Effects'}</button></div>
+      <div class="player-effects"><div class="effects-toolbar"><span class="next-range ${player.effects.length ? 'modified-range' : ''}">${previewMarkup(player)}</span><button type="button" class="effects-toggle" aria-expanded="${openEffects === player.id}" aria-controls="effects-${escape(player.id)}" aria-label="Speed effects for player ${index + 1}">${openEffects === player.id ? 'Close effects' : '＋ Effects'}</button></div>
       ${player.effects.length ? `<div class="effect-chips">${player.effects.map(effect => `<span class="effect-chip ${effect.kind}"><span>${escape(effectName(effect))}${effect.label ? ` · ${escape(effect.label)}` : ''}<small> · ${effect.roundsRemaining === null ? 'until removed' : `${effect.roundsRemaining} round${effect.roundsRemaining === 1 ? '' : 's'} left`}</small></span><button type="button" data-remove-effect="${escape(effect.id)}" aria-label="Remove ${escape(effectName(effect))}${effect.label ? ` ${escape(effect.label)}` : ''} from player ${index + 1}">×</button></span>`).join('')}</div>` : ''}
       ${effectEditor(player)}</div></div>`;
   }).join('') || '<div class="empty-roster">No players added. Add a survivor or adversary.</div>';
@@ -115,7 +115,7 @@ function addPlayer(role) {
   const type = state.types.find(item => item.role === role);
   const count = state.players.filter(player => typeOf(player).role === role).length;
   if (count >= (role === 'survivor' ? 24 : 8)) return;
-  state.players.push({ id: crypto.randomUUID(), typeId: type.id, username: '', min: type.min, max: type.max, effects: [] });
+  state.players.push({ id: createId(), typeId: type.id, username: '', min: type.min, max: type.max, effects: [] });
 }
 $('#add-survivor').addEventListener('click', () => { addPlayer('survivor'); render(); });
 $('#add-adversary').addEventListener('click', () => { addPlayer('adversary'); render(); });
@@ -181,12 +181,14 @@ $('#players').addEventListener('submit', event => {
   if (!event.target.matches('.effect-editor')) return;
   event.preventDefault();
   if (isRolling) return;
-  const form = event.target, data = new FormData(form);
-  const effect = { id: crypto.randomUUID(), kind: data.get('kind'), amount: Number(data.get('amount')),
-    roundsRemaining: data.get('duration') === 'conditional' ? null : Number(data.get('rounds')), label: data.get('label').trim() };
   try {
-    state = addSpeedEffect(state, form.closest('[data-player]').dataset.player, effect);
-    renderPlayers(); persist(); toast('Effect added. It applies on the next roll.');
+    const form = event.target, data = new FormData(form), playerId = form.closest('[data-player]').dataset.player;
+    const effect = { id: createId(), kind: data.get('kind'), amount: Number(data.get('amount')),
+      roundsRemaining: data.get('duration') === 'conditional' ? null : Number(data.get('rounds')), label: data.get('label').trim() };
+    state = addSpeedEffect(state, playerId, effect);
+    const range = effectiveRange(state.players.find(player => player.id === playerId));
+    renderPlayers(); persist();
+    toast(`${effectName(effect)} added. Next roll: ${range.min}–${range.max}. ${effect.roundsRemaining === null ? 'Active until removed.' : `Applies for the next ${effect.roundsRemaining} round roll${effect.roundsRemaining === 1 ? '' : 's'}.`}`);
   } catch (error) { toast(error.message); }
 });
 $('#types').addEventListener('change', event => {
@@ -211,7 +213,7 @@ $('#new-type-form').addEventListener('submit', event => {
   const min = Number(data.get('min')), max = Number(data.get('max')), name = data.get('name').trim();
   if (!name || !validRange(min, max)) { toast('Enter a name and a valid speed range, with minimum no higher than maximum.'); return; }
   if (state.types.length >= 100) { toast('You can have up to 100 character types.'); return; }
-  state.types.push({ id: crypto.randomUUID(), name, role: data.get('role'), min, max });
+  state.types.push({ id: createId(), name, role: data.get('role'), min, max });
   form.reset(); render(); toast(`${name} added to character types.`);
 });
 function validateRoster() {
