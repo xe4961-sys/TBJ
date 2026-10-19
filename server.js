@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { resolve, extname, sep } from 'node:path';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
-const mime = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml' };
+const mime = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg' };
 const server = createServer(async (request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
@@ -14,7 +14,7 @@ const server = createServer(async (request, response) => {
       return;
     }
     const body = await readFile(file);
-    response.writeHead(200, { 'Content-Type': `${mime[extname(file)]}; charset=utf-8`, 'Cache-Control': 'no-cache' });
+    response.writeHead(200, { 'Content-Type': mime[extname(file)] + (extname(file) === '.mp3' ? '' : '; charset=utf-8'), 'Content-Length': body.length, 'Cache-Control': 'no-cache' });
     response.end(body);
   } catch {
     response.writeHead(404).end('Not found');
