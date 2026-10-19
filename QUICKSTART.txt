@@ -1,0 +1,32 @@
+FUSE TIMER - WINDOWS x64
+
+1. Extract this ZIP and open FuseTimer.exe. No .NET installation is needed.
+2. The default grenade key is G and the fuse is 3.00 seconds.
+3. To change the key: click Change key, release the mouse/keys, then press
+   your grenade key. You can also use Mouse middle, Mouse 4, or Mouse 5.
+   Escape cancels key capture. Key combinations are not supported.
+4. Leave Hotkey enabled checked and minimize the app with the title-bar
+   minimize button. Press the same grenade key in the game to start.
+5. Beeps accelerate as time runs out. At zero you hear an explosion.
+   The window shows a burst/emoji when it is visible.
+6. Press the key again to restart. Holding it starts only one countdown.
+7. Sound on controls mute. Volume is adjustable from 0 to 100.
+8. Hide settings makes the window smaller. Always on top keeps it above
+   ordinary windows; exclusive-fullscreen games may cover the window.
+9. Restore the app from the taskbar or double-click its clock icon in the
+   system tray. The tray menu can also enable/disable the hotkey or sound.
+10. Closing the app exits it. It does not launch automatically with Windows.
+
+The app LISTENS for the key; it does not block, register, replay, or inject
+that key into the game. It runs while minimized, including sound.
+The binding is global: the key also starts it outside the game.
+
+This is a manual timing aid, not a game integration. It starts when the key
+press is observed, and the game may start its fuse at a different moment.
+Adjust the fuse if necessary. Default is exactly 3 seconds in the timer.
+
+This test build was cross-compiled on Linux. The core countdown and key-edge
+logic were tested there; native Windows key capture, UI, and actual sound
+output still need a test on your Windows PC. The executable is unsigned.
+
+Settings are kept in %LOCALAPPDATA%\FuseTimer\settings.json.
