@@ -1,4 +1,4 @@
-JOMA TRACKER 2.0.2 - WINDOWS x64
+JOMA TRACKER 2.0.3 - WINDOWS x64
 
 1. EXIT the previous Fuse Timer / Joma Tracker using its tray icon.
 2. Extract this ZIP. Run JomaTracker.exe. No .NET installation is required.
@@ -10,6 +10,13 @@ G (default) primes the existing grenade timer:
 0-3.00s countdown -> ARMED 0.20s -> RELEASE 0.50s -> BULLSEYE!! 0.30s.
 Beeping stops at 3.70s; the overlay hides at 4.00s by default.
 Binding, countdown duration, mute, volume and flashing remain adjustable.
+
+RAPID KICK -> RUSH FIX (2.0.3)
+Fast Kick checks briefly target up to 60/s for 0.4s; optional in Guest settings.
+A confirmed Sweep can also confirm a landed hit for offensive Rush selection.
+A one-time Rush-region check and brief early recovery catch late hit cues,
+keeping the original input time. Kick input alone is never a confirmed hit.
+The normal steady rate remains adjustable 5-30/s.
 
 DAMAGE-TINT FIX (2.0.2)
 Colors are compared against nearby background to reject red damage washes.
@@ -68,6 +75,6 @@ Sound on and volume affect both modes. Test sound and Windows mixer help
 check audio. Previous Wrecker settings are retained.
 
 FIRST GUEST TEST BUILD
-60 automated tests pass; the Windows executable compiles on Linux.
+69 automated tests pass; the Windows executable compiles on Linux.
 Real Windows screen capture, calibration, overlay, input and detection
 accuracy still need testing on your PC. See README.md for full details.
