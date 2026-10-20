@@ -1,15 +1,40 @@
-JOMA TRACKER 2.0.4 - WINDOWS x64
+JOMA TRACKER 2.0.5 - WINDOWS x64
 
 1. EXIT the previous Fuse Timer / Joma Tracker using its tray icon.
 2. Extract this ZIP. Run JomaTracker.exe. No .NET installation is required.
 3. It starts hidden: press F8 (or your saved controls key) for settings.
 4. Select WRECKER or GUEST. Only the selected mode runs.
 
+OPTIONAL VISUAL EVENTS (2.0.5)
+In Guest, scroll to OPTIONAL VISUAL EVENTS. Both options start OFF.
+First calibrate the normal Kick/Rush profile at your current resolution.
+
+SWEEP: Click Capture Sweep XP in 3s. Hide settings happens automatically;
+land Sweep during the delay. On the frozen screen, select only the white
+words Landed Sweep. (exclude all XP/point numbers), then the XP search area
+including the rows where it moves. Enable Refresh Offensive on Landed Sweep XP.
+A newly detected event after an attack refreshes Offensive availability;
+it does not extend an already active Rush. Lingering/moving text is deduplicated.
+Missed/hidden/replaced-in-place messages may be missed. Timing starts when
+we first see the XP message, not at the actual hit. Different bonuses do
+not matter when only the words were selected.
+
+PICKUP (EXPERIMENTAL): Click Capture red Rush box in 3s, initiate Supportive
+Rush during the delay, then select a region containing the red box sides.
+Enable Experimental passenger detection. Hide controls, start a new Rush.
+Requires red presence after 1.65s, followed by sustained disappearance.
+Adds +2s at most once; PICKUP? means assumed, not confirmed.
+Wall collisions, camera turns, occlusions and other red objects can fool it.
+Disappearance near the expected end is ignored. Reset after a wall/stun.
+Keep regions under 200,000 pixels. Calibration is saved in the profile.
+Extra checks target at most 10/s; main ability settings are unchanged.
+Hide controls/F8 before gameplay inputs. See README for exact safeguards.
+
 COMPACT DISPLAY (2.0.4)
 Enable Compact display in the common settings for minimal text and no bars.
 Guest combines Rush time/phase and independent windows into fewer lines.
 Wrecker uses a smaller countdown/warning display. Saved; optional.
-Passenger auto-detection and repeated-hit availability refresh are not included.
+Optional experimental passenger / Landed Sweep XP detectors are described above.
 
 WRECKER
 G (default) primes the existing grenade timer:
@@ -65,7 +90,7 @@ No cooldown or Enhanced Kick tracking. Reset for walls/stuns/interruptions.
 Detection requires calibration and fresh screen cues. It checks 20 times/s
 by default (adjustable 5-30). Lower rates save work but add latency.
 The preview shows capture time; actual in-game FPS impact is not measured.
-Only two text regions are captured; no video is saved or uploaded.
+Two text regions plus any enabled extra regions are captured; no video is saved or uploaded.
 If Rush is persistently Unknown before input, live timers cannot start. Select the colored
 Supportive/Offensive prefix, not just white Rush or the entire card.
 Rush now latches a fresh green/red cue at input, so the ability cards
@@ -81,6 +106,6 @@ Sound on and volume affect both modes. Test sound and Windows mixer help
 check audio. Previous Wrecker settings are retained.
 
 FIRST GUEST TEST BUILD
-71 automated tests pass; the Windows executable compiles on Linux.
+81 automated tests pass; the Windows executable compiles on Linux.
 Real Windows screen capture, calibration, overlay, input and detection
 accuracy still need testing on your PC. See README.md for full details.

@@ -1,4 +1,4 @@
-# Joma Tracker 2.0.4 — Windows download
+# Joma Tracker 2.0.5 — Windows download
 
 **Wrecker grenade timer + Guest recast-window tracker** in one portable Windows app.
 
@@ -13,11 +13,20 @@
 
 The existing grenade sequence is retained: accelerating beeps → ARMED → RELEASE! → BULLSEYE!! at 3.70–4.00s. Default grenade bind: G. Existing bindings, sound/volume, and timer preferences are preserved. No cooldown tracking.
 
+## New in 2.0.5
+
+Two **optional, initially disabled** calibrated visual-event detectors in Guest:
+
+- **Landed Sweep XP:** sample only the white phrase **Landed Sweep.**, excluding XP/point amounts, then select the XP search area. A new phrase after an attack refreshes Offensive availability even when the Rush label stays red. Lingering/scrolled text is deduplicated; an active Rush sprint is not extended. Calibration handles differing numeric bonuses by excluding the numbers entirely. Detection starts its timer at the first observed XP message; hidden/replaced-in-place events can be missed.
+- **Experimental passenger detection:** calibrate the red rectangular Rush box. Sustained presence after 1.65s followed by sustained disappearance can add +2s once per Supportive Rush, showing **PICKUP? +2s**. Walls, camera changes, and occlusion can cause false pickups. This cannot confirm that the character is still rushing. Reset after interruptions; leave disabled if unreliable.
+
+Use **Capture Sweep XP in 3s** / **Capture red Rush box in 3s**, perform the relevant action during the delay, then select the region(s) on the frozen screen. Enable the corresponding checkbox afterward and hide controls with F8. Main calibration/settings are retained; extra regions are new and must be calibrated per profile. Extra capture targets at most 10/s, with regions limited to 200,000 pixels. Actual Windows/gameplay recognition still needs testing. See QUICKSTART for instructions.
+
 ## New in 2.0.4
 
 Optional **Compact display (minimal text, no bars)** in common settings. Guest combines Rush sprint/phase into one line and independent windows into a second line, retaining notices and marked previews. Wrecker has a smaller countdown/warning display. Settings are saved, and the full display remains available. Detection/timing logic is unchanged.
 
-Passenger auto-detection and repeated-hit refresh while the Offensive label stays red are pending reliable visual cues. Manual pickup remains available.
+Optional visual-event detectors are described above. Manual pickup remains available.
 
 ## New in 2.0.3
 
@@ -47,9 +56,9 @@ If the live preview is persistently **Rush: Unknown before input**, no live Rush
 
 Sweep, Strike, Offensive Rush availability, both Rush windups, safe Dropkick recasts, and remaining sprint time have independent timers/shrinking bars. Timings and key bindings are adjustable. Calibration profiles support different monitor layouts/resolutions; verify detection after changing HUD scale or aspect ratio.
 
-Default Guest binds: **LMB** Kick, **Q** roll, **F** Rush/Dropkick, **F7** reset, **F6** learn Strike. Optional manual **F10** ally pickup adds 2s to a valid supportive run, initially disabled. Enhanced Kick, cooldowns, automatic pickup detection, and automatic interruption detection are excluded.
+Default Guest binds: **LMB** Kick, **Q** roll, **F** Rush/Dropkick, **F7** reset, **F6** learn Strike. Optional manual **F10** ally pickup adds 2s to a valid supportive run, initially disabled. Enhanced Kick, cooldowns, and automatic interruption detection are excluded. Optional passenger inference is experimental.
 
-Guest captures only the two selected text regions, with color and image-mask checks at a steady **20 checks/s**, adjustable **5–30**, plus optional brief Kick bursts and a one-shot Rush-prefix check. No video recording, OCR model, uploads, or game-memory access. Wrecker mode does not capture the screen. The app does not alter or block game inputs. Rush uses the most recent confirmed color (at most 0.35s old) and its timer stays anchored to the input. Guest capture pauses while positioning; the timer is moved clear if it overlaps either detection region.
+Guest captures the two selected text regions plus any enabled calibrated visual-event regions, with color and image-mask checks at a steady **20 checks/s**, adjustable **5–30**, plus optional brief Kick bursts and a one-shot Rush-prefix check. No video recording, OCR model, uploads, or game-memory access. Wrecker mode does not capture the screen. The app does not alter or block game inputs. Rush uses the most recent confirmed color (at most 0.35s old) and its timer stays anchored to the input. Guest capture pauses while positioning; the timer is moved clear if it overlaps either detection region.
 
 Common settings include mute/volume, Test sound, Windows mixer, idle hiding, per-mode overlay positioning, and a changeable controls key. The normal overlay is transparent, borderless, click-through, and hidden when idle by default. Use windowed/borderless gameplay.
 
@@ -57,7 +66,7 @@ Read [QUICKSTART.txt](QUICKSTART.txt) for setup. [Source ZIP](JomaTracker-source
 
 ## First Guest test build
 
-71 automated tests pass for timing, independent windows, input transitions, stale-cue rejection, calibrated region scaling, synthetic color/template detection, and Wrecker/audio regressions. The Windows x64 executable cross-compiles without warnings. Actual Windows capture/UI, live recognition accuracy, game input, audio, and FPS impact still need testing on your PC. The app is self-contained and unsigned.
+81 automated tests pass for timing, independent windows, input transitions, stale-cue rejection, calibrated region scaling, synthetic color/template detection, and Wrecker/audio regressions. The Windows x64 executable cross-compiles without warnings. Actual Windows capture/UI, live recognition accuracy, game input, audio, and FPS impact still need testing on your PC. The app is self-contained and unsigned.
 
 ## Previous Wrecker-only app
 
