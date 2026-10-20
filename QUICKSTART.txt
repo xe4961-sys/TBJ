@@ -1,57 +1,57 @@
-FUSE TIMER 1.2.2 - WINDOWS x64
+JOMA TRACKER 2.0 - WINDOWS x64
 
-UPDATING: Exit the OLD copy from its tray icon first. Then extract this ZIP
-and run the NEW FuseTimer.exe. No .NET installation is required.
+1. EXIT the previous Fuse Timer / Joma Tracker using its tray icon.
+2. Extract this ZIP. Run JomaTracker.exe. No .NET installation is required.
+3. It starts hidden: press F8 (or your saved controls key) for settings.
+4. Select WRECKER or GUEST. Only the selected mode runs.
 
-The app STARTS HIDDEN. There is no settings/taskbar window until you ask.
-- G (default): start or restart the grenade countdown.
-- F8 (default): open/hide settings.
-- Clock icon in the system tray: open settings, mute, pause, or exit.
+WRECKER
+G (default) primes the existing grenade timer:
+0-3.00s countdown -> ARMED 0.20s -> RELEASE 0.50s -> BULLSEYE!! 0.30s.
+Beeping stops at 3.70s; the overlay hides at 4.00s by default.
+Binding, countdown duration, mute, volume and flashing remain adjustable.
 
-SEQUENCE AFTER THE GRENADE KEY
-0.00-3.00 seconds: floating countdown with accelerating electronic beeps.
-3.00-3.20 seconds: ARMED, with urgent high-pitched beeps.
-3.20-3.70 seconds: RELEASE!, with urgent high-pitched beeps.
-3.70-4.00 seconds: BULLSEYE!! airburst cue; warning audio stops.
-After 4.00 seconds: the overlay hides by default.
-There is no added explosion sound or spoken voice.
+GUEST - CALIBRATE FIRST
+Use borderless/windowed gameplay. Show base Kick and Supportive Rush.
+- Select monitor and profile name. Click Calibrate text regions.
+- On the frozen screen, drag tightly around the Kick word ONLY, leaving
+  enough width for Sweep/Strike. Exclude the border and LMB icon.
+- Then drag around the colored Supportive/Offensive word ONLY. Exclude
+  the white Rush word and F icon. The profile saves automatically.
+- Check the live crops and detection labels in Guest settings.
+- Click Learn Strike label, hide controls, roll in game, then press F6
+  while Strike is visible. This allows white/gold Strike recognition.
+- Hide controls before playing: Guest ability inputs pause in settings.
 
-SETTINGS (press F8)
-- Change the grenade key or the separate controls key. Click Change key,
-  release the mouse/keys, then press the new key. Escape cancels capture.
-  The two keys must differ. Supports one key or Mouse middle/4/5, no chords.
-- Sound on/muted and volume: affect ALL countdown and warning beeps.
-- Test sound: cancels the countdown and plays a longer beep. It uses the
-  selected mute/volume and reconnects to the default Windows audio device.
-  Any Windows audio error appears below the button.
-- Windows mixer: opens Windows volume/output settings. If the sound test is
-  silent, check FuseTimer is unmuted there and uses your speakers/headphones.
-- Only show while primed: ON by default. Hides the idle/completed overlay.
-- Gentle warning flashes: optional, OFF by default. Only the ARMED/RELEASE
-  text pulses; it never flashes the whole screen or goes fully invisible.
-- Position overlay: shows a movable preview. Drag the digits, then choose
-  Done positioning. During play the overlay is click-through.
-- Hide controls or F8 returns to hidden/background mode. Closing the
-  settings window also hides it. To stop the app, choose Exit app or tray Exit.
+GUEST BINDS (all changeable)
+Left mouse: Kick / recast       Q: Dodgeroll
+F: Rush / Dropkick              F7: reset Guest windows
+F6: learn Strike sample         F10: manual pickup +2s (OFF by default)
+F8: open/hide controls for either mode
+Bindings only observe inputs: set them to match your game.
 
-The overlay has a transparent background, no title bar or border, no taskbar
-button, and does not activate or take focus from the game. Use borderless
-fullscreen or windowed mode; exclusive fullscreen may cover ordinary overlays.
+GUEST TIMINGS
+Sweep/Strike: 1.967s. Offensive availability: 2.983s, independent of Sweep.
+Support: 1.550s windup -> 4s sprint; carrying hitbox starts at 1.650s.
+Offensive: 0.917s windup -> 3s sprint. Safe Dropkick starts 1.050s after
+Rush input and lasts to about 3.917s. Second Rush press ends the window.
+Early recast is treated as cancellation. All timings are adjustable.
+Guest includes shrinking bars and optional readiness beeps.
+No cooldown or Enhanced Kick tracking. Reset for walls/stuns/interruptions.
 
-Holding the grenade key starts one sequence. Release and press again to
-restart from 3.00. The app observes the key without blocking/replaying it.
-Hotkey enabled can be turned off; manual Start still works for testing.
+Detection requires calibration and fresh screen cues. It checks 20 times/s
+by default (adjustable 5-30). Lower rates save work but add latency.
+The preview shows capture time; actual in-game FPS impact is not measured.
+Only two text regions are captured; no video is saved or uploaded.
+If the HUD is obstructed or uncertain, Rush can show UNCONFIRMED.
 
-Settings, binding, mute, and overlay position are saved under:
-%LOCALAPPDATA%\FuseTimer\settings.json
-If F8 was your old grenade key, the controls key defaults to F9 instead;
-the tray icon always provides access.
+COMMON
+Position overlay: drag its text, then click Done positioning to lock it.
+Hide controls/F8/close minimizes to the tray. Exit app/tray Exit quits.
+Sound on and volume affect both modes. Test sound and Windows mixer help
+check audio. Previous Wrecker settings are retained.
 
-This is a manual timing aid, not a game integration or detonation detector.
-The deadline is based on the observed key press. Change Seconds until ARMED
-if calibration is needed; ARMED remains 0.20s, RELEASE 0.50s, and BULLSEYE!! 0.30s.
-
-TEST BUILD: Windows x64, self-contained, unsigned. Timing, visibility rules,
-key-edge logic, and PCM beep data passed 25 tests on Linux. The executable
-compiled for Windows; native transparency, key input, and speaker output
-still need testing on your Windows PC.
+FIRST GUEST TEST BUILD
+45 automated tests pass; the Windows executable compiles on Linux.
+Real Windows screen capture, calibration, overlay, input and detection
+accuracy still need testing on your PC. See README.md for full details.

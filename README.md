@@ -1,49 +1,42 @@
-# Fuse Timer 1.2.2 — Windows download
+# Joma Tracker 2.0 — Windows download
 
-A separate grenade-release countdown app. TBJ's tracker stays on `main`; **do not merge this download branch into main**.
+**Wrecker grenade timer + Guest recast-window tracker** in one portable Windows app.
 
-**[Download the updated Windows ZIP](https://github.com/xe4961-sys/TBJ/raw/refs/heads/fuse-timer-download/FuseTimer-Windows-x64.zip)**
+**[Download Joma Tracker for Windows x64](https://github.com/xe4961-sys/TBJ/raw/refs/heads/fuse-timer-download/JomaTracker-Windows-x64.zip)**
 
-## Start here
+1. **Exit the old Fuse Timer / Joma Tracker** from its tray icon first.
+2. Extract the ZIP and run **JomaTracker.exe**. No separate .NET installation is required.
+3. The app starts hidden. Press **F8** (or your saved controls key) to open settings.
+4. Choose **Wrecker** or **Guest**. Only the selected mode runs.
 
-1. **Exit the old version** from its clock icon in the system tray.
-2. Download the ZIP, right-click it in Windows File Explorer → **Extract All**.
-3. Run the extracted **FuseTimer.exe**. It needs no separate .NET installation.
-4. **It starts hidden. Press F8 to open settings.** The tray icon is another way to open them.
-5. **G** (default) starts the sequence. Both the grenade key and controls key are configurable.
+## Wrecker
 
-## New in 1.2.2
+The existing grenade sequence is retained: accelerating beeps → ARMED → RELEASE! → BULLSEYE!! at 3.70–4.00s. Default grenade bind: G. Existing bindings, sound/volume, and timer preferences are preserved. No cooldown tracking.
 
-**BULLSEYE!!** appears from 3.70 to 4.00 seconds after priming at the default 3-second countdown. The overlay then hides. The cue is a fixed timing marker, not detection of an actual hit.
+## Guest — calibrate before playing
 
-## Audio update (1.2.1)
+- Select a monitor and profile name, then **Calibrate text regions** with base Kick visible.
+- Select the **Kick word only**, leaving enough width for Sweep/Strike. Then select the colored **Supportive/Offensive word only**, excluding Rush/F and the card borders.
+- Check the live crops and detection labels.
+- Click **Learn Strike label**, hide controls, roll in game, then press **F6** while Strike is visible. This supports its white or gold appearance.
+- Hide controls before playing. Guest ability inputs are paused while settings are open.
 
-Replaces the previous sound player with direct Windows PCM output. **Test sound** plays a longer beep and reconnects to the default audio device; any playback error appears below it. Failed attempts no longer silently disable the audio session. **Windows mixer** opens app volume/output settings if a successful test is still inaudible. Native speaker output still needs a Windows check.
+Sweep, Strike, Offensive Rush availability, both Rush windups, safe Dropkick recasts, and remaining sprint time have independent timers/shrinking bars. Timings and key bindings are adjustable. Calibration profiles support different monitor layouts/resolutions; verify detection after changing HUD scale or aspect ratio.
 
-## Behavior
+Default Guest binds: **LMB** Kick, **Q** roll, **F** Rush/Dropkick, **F7** reset, **F6** learn Strike. Optional manual **F10** ally pickup adds 2s to a valid supportive run, initially disabled. Enhanced Kick, cooldowns, automatic pickup detection, and automatic interruption detection are excluded.
 
-| After the grenade key | Display |
-| --- | --- |
-| 0–3.00s | Transparent floating countdown; sharp accelerating electronic beeps |
-| 3.00–3.20s | **ARMED**, urgent beeps |
-| 3.20–3.70s | **RELEASE!**, urgent beeps |
-| 3.70–4.00s | **BULLSEYE!!**, steady green text; sound stops |
-| After 4.00s | Overlay hides by default |
+Guest captures only the two selected text regions, with color and image-mask checks at **20 checks/s**, adjustable **5–30**. No video recording, OCR model, uploads, or game-memory access. Wrecker mode does not capture the screen. The app does not alter or block game inputs. Screen confirmation can briefly delay the overlay's Rush display; its timer stays anchored to the original input.
 
-No added explosion sound or spoken voice. The overlay has no window rectangle, title bar, white border, or taskbar button. It is click-through and does not take focus from the game.
+Common settings include mute/volume, Test sound, Windows mixer, idle hiding, per-mode overlay positioning, and a changeable controls key. The normal overlay is transparent, borderless, click-through, and hidden when idle by default. Use windowed/borderless gameplay.
 
-In settings:
+Read [QUICKSTART.txt](QUICKSTART.txt) for setup. [Source ZIP](JomaTracker-source.zip) and [checksums](SHA256.txt) are included.
 
-- **Only show while primed:** on by default; hides the idle/completed overlay.
-- **Gentle warning flashes:** optional, off by default; pulses only ARMED/RELEASE text.
-- **Sound on/muted** and **Volume:** control all beeps independently of flashing.
-- **Position overlay:** drag the displayed digits, then choose Done positioning.
-- **Hide controls** or **F8:** hides the settings window. Closing it hides it too; use **Exit app** or tray **Exit** to quit.
+## First Guest test build
 
-Use borderless fullscreen/windowed mode for overlay visibility. Exclusive fullscreen may cover ordinary desktop overlays. The app is a manual timing aid; it does not detect the game's grenade state. Pressing the grenade key again restarts the sequence; holding it triggers once.
+45 automated tests pass for timing, independent windows, input transitions, stale-cue rejection, calibrated region scaling, synthetic color/template detection, and Wrecker/audio regressions. The Windows x64 executable cross-compiles without warnings. Actual Windows capture/UI, live recognition accuracy, game input, audio, and FPS impact still need testing on your PC. The app is self-contained and unsigned.
 
-Read [QUICKSTART.txt](QUICKSTART.txt) for complete instructions. [Source ZIP](FuseTimer-source.zip) and [archive checksums](SHA256.txt) are included.
+## Previous Wrecker-only app
 
-## Test-build status
+The original [Fuse Timer 1.2.2 download](FuseTimer-Windows-x64.zip) and [source](FuseTimer-source.zip) remain available.
 
-25 tests passed for timing, visibility rules, key edges, flashing, PCM beep data, and audio-control failure recovery using a fake output. The self-contained, unsigned Windows x64 executable compiled on Linux. Native Windows transparency/click-through, game key input, and speaker output still need a test on your PC.
+This is a separate download branch. TBJ's tracker website remains on `main`; **do not merge this branch into main**.
