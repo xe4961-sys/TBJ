@@ -1,4 +1,4 @@
-# Joma Tracker 2.0.1 — Windows download
+# Joma Tracker 2.0.2 — Windows download
 
 **Wrecker grenade timer + Guest recast-window tracker** in one portable Windows app.
 
@@ -12,6 +12,10 @@
 ## Wrecker
 
 The existing grenade sequence is retained: accelerating beeps → ARMED → RELEASE! → BULLSEYE!! at 3.70–4.00s. Default grenade bind: G. Existing bindings, sound/volume, and timer preferences are preserved. No cooldown tracking.
+
+## New in 2.0.2
+
+Damage-vignette filtering: compare lettering colors with nearby background, so a broad red damage wash or smooth gradient is not counted as the Offensive Rush label. Genuine supportive/offensive text under simulated damage tint remains recognized. Very low contrast becomes Unknown. Uses existing calibration and the same capture rate; the actual game vignette still needs a live test.
 
 ## New in 2.0.1
 
@@ -41,7 +45,7 @@ Read [QUICKSTART.txt](QUICKSTART.txt) for setup. [Source ZIP](JomaTracker-source
 
 ## First Guest test build
 
-54 automated tests pass for timing, independent windows, input transitions, stale-cue rejection, calibrated region scaling, synthetic color/template detection, and Wrecker/audio regressions. The Windows x64 executable cross-compiles without warnings. Actual Windows capture/UI, live recognition accuracy, game input, audio, and FPS impact still need testing on your PC. The app is self-contained and unsigned.
+60 automated tests pass for timing, independent windows, input transitions, stale-cue rejection, calibrated region scaling, synthetic color/template detection, and Wrecker/audio regressions. The Windows x64 executable cross-compiles without warnings. Actual Windows capture/UI, live recognition accuracy, game input, audio, and FPS impact still need testing on your PC. The app is self-contained and unsigned.
 
 ## Previous Wrecker-only app
 

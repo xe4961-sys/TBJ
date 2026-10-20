@@ -1,4 +1,4 @@
-JOMA TRACKER 2.0.1 - WINDOWS x64
+JOMA TRACKER 2.0.2 - WINDOWS x64
 
 1. EXIT the previous Fuse Timer / Joma Tracker using its tray icon.
 2. Extract this ZIP. Run JomaTracker.exe. No .NET installation is required.
@@ -10,6 +10,11 @@ G (default) primes the existing grenade timer:
 0-3.00s countdown -> ARMED 0.20s -> RELEASE 0.50s -> BULLSEYE!! 0.30s.
 Beeping stops at 3.70s; the overlay hides at 4.00s by default.
 Binding, countdown duration, mute, volume and flashing remain adjustable.
+
+DAMAGE-TINT FIX (2.0.2)
+Colors are compared against nearby background to reject red damage washes.
+Existing calibration is retained; no capture-rate increase is needed.
+Severely hidden text may show Unknown rather than a guessed variant.
 
 GUEST - TEST THE OVERLAY FIRST
 Test supportive Rush / Test offensive Rush show simulated timers without
@@ -63,6 +68,6 @@ Sound on and volume affect both modes. Test sound and Windows mixer help
 check audio. Previous Wrecker settings are retained.
 
 FIRST GUEST TEST BUILD
-54 automated tests pass; the Windows executable compiles on Linux.
+60 automated tests pass; the Windows executable compiles on Linux.
 Real Windows screen capture, calibration, overlay, input and detection
 accuracy still need testing on your PC. See README.md for full details.
