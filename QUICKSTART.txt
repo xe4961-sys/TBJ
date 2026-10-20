@@ -1,9 +1,15 @@
-JOMA TRACKER 2.0.3 - WINDOWS x64
+JOMA TRACKER 2.0.4 - WINDOWS x64
 
 1. EXIT the previous Fuse Timer / Joma Tracker using its tray icon.
 2. Extract this ZIP. Run JomaTracker.exe. No .NET installation is required.
 3. It starts hidden: press F8 (or your saved controls key) for settings.
 4. Select WRECKER or GUEST. Only the selected mode runs.
+
+COMPACT DISPLAY (2.0.4)
+Enable Compact display in the common settings for minimal text and no bars.
+Guest combines Rush time/phase and independent windows into fewer lines.
+Wrecker uses a smaller countdown/warning display. Saved; optional.
+Passenger auto-detection and repeated-hit availability refresh are not included.
 
 WRECKER
 G (default) primes the existing grenade timer:
@@ -75,6 +81,6 @@ Sound on and volume affect both modes. Test sound and Windows mixer help
 check audio. Previous Wrecker settings are retained.
 
 FIRST GUEST TEST BUILD
-69 automated tests pass; the Windows executable compiles on Linux.
+71 automated tests pass; the Windows executable compiles on Linux.
 Real Windows screen capture, calibration, overlay, input and detection
 accuracy still need testing on your PC. See README.md for full details.
