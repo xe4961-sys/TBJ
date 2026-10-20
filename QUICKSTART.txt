@@ -1,4 +1,4 @@
-FUSE TIMER 1.2.1 - WINDOWS x64
+FUSE TIMER 1.2.2 - WINDOWS x64
 
 UPDATING: Exit the OLD copy from its tray icon first. Then extract this ZIP
 and run the NEW FuseTimer.exe. No .NET installation is required.
@@ -12,8 +12,9 @@ SEQUENCE AFTER THE GRENADE KEY
 0.00-3.00 seconds: floating countdown with accelerating electronic beeps.
 3.00-3.20 seconds: ARMED, with urgent high-pitched beeps.
 3.20-3.70 seconds: RELEASE!, with urgent high-pitched beeps.
-After 3.70 seconds: warnings stop and the overlay hides by default.
-There is no explosion cue or spoken voice.
+3.70-4.00 seconds: BULLSEYE!! airburst cue; warning audio stops.
+After 4.00 seconds: the overlay hides by default.
+There is no added explosion sound or spoken voice.
 
 SETTINGS (press F8)
 - Change the grenade key or the separate controls key. Click Change key,
@@ -48,9 +49,9 @@ the tray icon always provides access.
 
 This is a manual timing aid, not a game integration or detonation detector.
 The deadline is based on the observed key press. Change Seconds until ARMED
-if calibration is needed; ARMED remains 0.20s and RELEASE remains 0.50s.
+if calibration is needed; ARMED remains 0.20s, RELEASE 0.50s, and BULLSEYE!! 0.30s.
 
 TEST BUILD: Windows x64, self-contained, unsigned. Timing, visibility rules,
-key-edge logic, and PCM beep data passed 24 tests on Linux. The executable
+key-edge logic, and PCM beep data passed 25 tests on Linux. The executable
 compiled for Windows; native transparency, key input, and speaker output
 still need testing on your Windows PC.

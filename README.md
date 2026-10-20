@@ -1,4 +1,4 @@
-# Fuse Timer 1.2.1 — Windows download
+# Fuse Timer 1.2.2 — Windows download
 
 A separate grenade-release countdown app. TBJ's tracker stays on `main`; **do not merge this download branch into main**.
 
@@ -12,6 +12,10 @@ A separate grenade-release countdown app. TBJ's tracker stays on `main`; **do no
 4. **It starts hidden. Press F8 to open settings.** The tray icon is another way to open them.
 5. **G** (default) starts the sequence. Both the grenade key and controls key are configurable.
 
+## New in 1.2.2
+
+**BULLSEYE!!** appears from 3.70 to 4.00 seconds after priming at the default 3-second countdown. The overlay then hides. The cue is a fixed timing marker, not detection of an actual hit.
+
 ## Audio update (1.2.1)
 
 Replaces the previous sound player with direct Windows PCM output. **Test sound** plays a longer beep and reconnects to the default audio device; any playback error appears below it. Failed attempts no longer silently disable the audio session. **Windows mixer** opens app volume/output settings if a successful test is still inaudible. Native speaker output still needs a Windows check.
@@ -23,9 +27,10 @@ Replaces the previous sound player with direct Windows PCM output. **Test sound*
 | 0–3.00s | Transparent floating countdown; sharp accelerating electronic beeps |
 | 3.00–3.20s | **ARMED**, urgent beeps |
 | 3.20–3.70s | **RELEASE!**, urgent beeps |
-| After 3.70s | Sound stops; overlay hides by default |
+| 3.70–4.00s | **BULLSEYE!!**, steady green text; sound stops |
+| After 4.00s | Overlay hides by default |
 
-No premature explosion indication or spoken voice. The overlay has no window rectangle, title bar, white border, or taskbar button. It is click-through and does not take focus from the game.
+No added explosion sound or spoken voice. The overlay has no window rectangle, title bar, white border, or taskbar button. It is click-through and does not take focus from the game.
 
 In settings:
 
@@ -41,4 +46,4 @@ Read [QUICKSTART.txt](QUICKSTART.txt) for complete instructions. [Source ZIP](Fu
 
 ## Test-build status
 
-24 tests passed for timing, visibility rules, key edges, flashing, PCM beep data, and audio-control failure recovery using a fake output. The self-contained, unsigned Windows x64 executable compiled on Linux. Native Windows transparency/click-through, game key input, and speaker output still need a test on your PC.
+25 tests passed for timing, visibility rules, key edges, flashing, PCM beep data, and audio-control failure recovery using a fake output. The self-contained, unsigned Windows x64 executable compiled on Linux. Native Windows transparency/click-through, game key input, and speaker output still need a test on your PC.
