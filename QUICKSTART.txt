@@ -1,4 +1,4 @@
-JOMA TRACKER 2.0 - WINDOWS x64
+JOMA TRACKER 2.0.1 - WINDOWS x64
 
 1. EXIT the previous Fuse Timer / Joma Tracker using its tray icon.
 2. Extract this ZIP. Run JomaTracker.exe. No .NET installation is required.
@@ -11,13 +11,18 @@ G (default) primes the existing grenade timer:
 Beeping stops at 3.70s; the overlay hides at 4.00s by default.
 Binding, countdown duration, mute, volume and flashing remain adjustable.
 
-GUEST - CALIBRATE FIRST
+GUEST - TEST THE OVERLAY FIRST
+Test supportive Rush / Test offensive Rush show simulated timers without
+calibration. Controls hide; press F8 to return. They do not activate moves.
+Sprint duration is a separate line beside WAIT / DROPKICK READY.
+
+GUEST - CALIBRATE FOR LIVE DETECTION
 Use borderless/windowed gameplay. Show base Kick and Supportive Rush.
 - Select monitor and profile name. Click Calibrate text regions.
 - On the frozen screen, drag tightly around the Kick word ONLY, leaving
   enough width for Sweep/Strike. Exclude the border and LMB icon.
 - Then drag around the colored Supportive/Offensive word ONLY. Exclude
-  the white Rush word and F icon. The profile saves automatically.
+  the white Rush word and F icon. The profile saves only after a green/red Rush cue is recognized.
 - Check the live crops and detection labels in Guest settings.
 - Click Learn Strike label, hide controls, roll in game, then press F6
   while Strike is visible. This allows white/gold Strike recognition.
@@ -43,7 +48,13 @@ Detection requires calibration and fresh screen cues. It checks 20 times/s
 by default (adjustable 5-30). Lower rates save work but add latency.
 The preview shows capture time; actual in-game FPS impact is not measured.
 Only two text regions are captured; no video is saved or uploaded.
-If the HUD is obstructed or uncertain, Rush can show UNCONFIRMED.
+If Rush is persistently Unknown before input, live timers cannot start. Select the colored
+Supportive/Offensive prefix, not just white Rush or the entire card.
+Rush now latches a fresh green/red cue at input, so the ability cards
+disappearing during windup will not cancel its timer. Wait for the first
+confirmed color before using Rush. The preview reports the last input.
+Positioning pauses detection; overlapping timer text is moved clear of
+the ability labels when positioning ends.
 
 COMMON
 Position overlay: drag its text, then click Done positioning to lock it.
@@ -52,6 +63,6 @@ Sound on and volume affect both modes. Test sound and Windows mixer help
 check audio. Previous Wrecker settings are retained.
 
 FIRST GUEST TEST BUILD
-45 automated tests pass; the Windows executable compiles on Linux.
+54 automated tests pass; the Windows executable compiles on Linux.
 Real Windows screen capture, calibration, overlay, input and detection
 accuracy still need testing on your PC. See README.md for full details.
