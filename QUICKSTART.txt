@@ -1,9 +1,34 @@
-JOMA TRACKER 2.0.5 - WINDOWS x64
+JOMA QOL 3.0.0 - WINDOWS x64
 
-1. EXIT the previous Fuse Timer / Joma Tracker using its tray icon.
-2. Extract this ZIP. Run JomaTracker.exe. No .NET installation is required.
+1. EXIT the previous Fuse Timer / Joma Tracker / Joma QoL using its tray icon.
+2. Extract this ZIP. Run JomaQoL.exe. No .NET installation is required.
 3. It starts hidden: press F8 (or your saved controls key) for settings.
 4. Select WRECKER or GUEST. Only the selected mode runs.
+
+CHARACTER SWITCHER (3.0.0)
+F8 -> Switcher. Defaults: Numpad 1 Brawler, 2 Knight, 3 Guest,
+4 Firefighter, 5 Unassigned. Record each favorite separately.
+
+1. Select a favorite and click Record selected. Settings hide.
+2. Return to game with the Shop CLOSED (the starting state to reuse).
+3. Press F9 to BEGIN. Click Shop -> character -> Equip normally.
+4. Release mouse buttons. Press F9 again to SAVE. Escape cancels.
+5. Open F8 -> Switcher, enable Numpad 1-5 shortcuts, then hide controls.
+6. Return to that same game/menu state. NUM LOCK ON, use the Numpad key.
+
+F9 recording key and favorite names are changeable.
+Replay defaults to 200% speed, minimum 150ms between menu actions.
+Increase minimum wait / lower speed if menus miss clicks. Optional per-step
+recorded wait editing is in the action list; first action is immediate.
+Escape, F8/opening controls, or tray Stop macro stops replay.
+Focus/window-size changes abort; queued/repeated replays are not allowed.
+Only clicks/wheel are recorded, not typing or mouse drag paths.
+Moving the window is supported; resizing/menu layout changes need rerecording.
+The switcher works alongside Wrecker/Guest; tracker inputs pause during macros.
+Only the recorded app with controls hidden can use its shortcut.
+Successful click dispatch does NOT confirm that the game equipped a character.
+Native Windows recording/hotkeys/replay still need testing on your PC.
+Previous tracker settings/calibration and Wrecker sounds are retained.
 
 OPTIONAL VISUAL EVENTS (2.0.5)
 In Guest, scroll to OPTIONAL VISUAL EVENTS. Both options start OFF.
@@ -106,6 +131,6 @@ Sound on and volume affect both modes. Test sound and Windows mixer help
 check audio. Previous Wrecker settings are retained.
 
 FIRST GUEST TEST BUILD
-81 automated tests pass; the Windows executable compiles on Linux.
+93 automated tests pass; the Windows executable compiles on Linux.
 Real Windows screen capture, calibration, overlay, input and detection
 accuracy still need testing on your PC. See README.md for full details.
